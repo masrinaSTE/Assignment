@@ -12,7 +12,6 @@
     <string-array name="options">
         <item>Home</item>
         <item>My Favorite</item>
-        <item>Logout</item>
     </string-array>
 
     <!-- Navigation Drawer List Item Icons -->

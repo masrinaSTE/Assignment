@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/masrina/Downloads/IndividualProjectProject/IndividualProject/build/intermediates/pre-dexed/debug/classes-66e083d1874b19131516339be9371c1b62ed112e.jar"
+        jar="/Users/masrina/Downloads/IndividualProjectProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/Users/masrina/Downloads/IndividualProjectProject/IndividualProject/build/intermediates/pre-dexed/debug/classes-757b5df0142bb31692159c8d937b41080b05fd46.jar"
+        jar="/Users/masrina/Downloads/IndividualProjectProject/build/intermediates/exploded-aar/com.google.android.gms/play-services/4.4.52/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3dfdf1db5ce5ea2999a5dcde8c8e650b02660059"/>
+    <item
+        dex="/Users/masrina/Downloads/IndividualProjectProject/IndividualProject/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+
+</pre-dex-items>

@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.11.+'
     }
 }
 apply plugin: 'android'
@@ -14,7 +14,7 @@ repositories {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 16
@@ -23,11 +23,6 @@ android {
 }
 
 dependencies {
-
-
-
-    //    compile files('libs/google-api-client-android-1.18.0-rc.jar')
-    //    compile files('libs/google-play-services.jar')
     compile 'com.android.support:appcompat-v7:19.+'
     compile 'com.google.android.gms:play-services:+'
 }
