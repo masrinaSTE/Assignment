@@ -11,14 +11,13 @@
     <!-- Navigation Drawer Menu Item -->
     <string-array name="options">
         <item>Home</item>
-        <item>My Favorite</item>
+        <item>Sign Out</item>
     </string-array>
 
     <!-- Navigation Drawer List Item Icons -->
     <array name="options_icons">
         <item>@drawable/ic_action_search</item>
         <item>@drawable/ic_action_favorite</item>
-        <item>@drawable/ic_action_accounts</item>
     </array>
 
     <!-- Contenct Description -->

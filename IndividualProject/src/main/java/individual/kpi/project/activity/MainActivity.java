@@ -2,13 +2,14 @@ package individual.kpi.project.activity;
 
 
 import android.app.Fragment;
-import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +20,13 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import individual.kpi.project.R;
-import individual.kpi.project.drawer.adapter.NavigationDrawerAdapter;
-import individual.kpi.project.drawer.model.NavigationDrawerItem;
+import individual.kpi.project.adapter.NavigationDrawerAdapter;
+import individual.kpi.project.adapter.TitleNavigationAdapter;
+import individual.kpi.project.model.NavigationDrawerItem;
 import individual.kpi.project.fragment.HomeFragment;
-import individual.kpi.project.fragment.MyFavouriteFragment;
+import individual.kpi.project.model.SpinnerNavItem;
 
-public class MainActivity extends FragmentActivity{
+public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener{
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -38,11 +40,33 @@ public class MainActivity extends FragmentActivity{
     private ArrayList<NavigationDrawerItem> navigationDrawerItems;
     private NavigationDrawerAdapter adapter;
     ListView postList;
+    private ActionBar actionBar;
+    private ArrayList<SpinnerNavItem> navItems;
+    private TitleNavigationAdapter navigationAdapter;
+    private boolean synthetic = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTitle = mDrawerTitle = getTitle();
+        //---- For Spinner in Action Bar ----//
+        actionBar = getActionBar();
+        // Hide the action bar title
+        actionBar.setDisplayShowTitleEnabled(false);
+        // Enable spinner dropdown navigation
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+
+        // Spinner title data
+        navItems = new ArrayList<SpinnerNavItem>();
+        navItems.add(new SpinnerNavItem("Latest Post"));
+        navItems.add(new SpinnerNavItem("Oldest Post"));
+
+        // title dropdown adapter
+        navigationAdapter = new TitleNavigationAdapter(getApplicationContext(), navItems);
+        // assign the spinner navigation
+        actionBar.setListNavigationCallbacks(navigationAdapter, this);
+        //---- End of For Spinner in Action Bar ----//
 
         // to load slide menu item
         mOptions = getResources().getStringArray(R.array.options);
@@ -99,26 +123,48 @@ public class MainActivity extends FragmentActivity{
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(int i, long l) {
+        String[] order = getResources().getStringArray(R.array.sort_by);
+        HomeFragment obj = new HomeFragment();
+        Bundle bundle=new Bundle();
+        if(synthetic){
+            synthetic = false;
+            return true;
+        }
+        switch (i){
+            case 0:
+                bundle.putString("url", HomeFragment.url_latest);
+                break;
+            case 1:
+                bundle.putString("url", HomeFragment.url_oldest);
+                break;
+        }
+        obj.setArguments(bundle);
+        android.app.FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, obj, order[i]).commit();
+        Log.i("BundleValue: ", String.valueOf(obj));
+        return true;
+    }
+
     /**
      * Slide Menu item click listener
      */
     private class SlideMenuClickListener implements ListView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-
             displayView(position);
         }
     }
 
     private void displayView(int position){
         Fragment newFragment = null;
-        FragmentManager fm = getFragmentManager();
         switch(position){
             case 0:
                 newFragment = new HomeFragment();
                 break;
             case 1:
-                newFragment = new MyFavouriteFragment();
+                newFragment = null;
                 break;
         }
         if(newFragment != null){

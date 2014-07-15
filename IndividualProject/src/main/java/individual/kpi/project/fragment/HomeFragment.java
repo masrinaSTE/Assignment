@@ -1,14 +1,12 @@
 package individual.kpi.project.fragment;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -36,19 +33,17 @@ import individual.kpi.project.activity.BlogPostContent;
 /**
  * Created by masrina on 3/8/14.
  */
-public class HomeFragment extends android.app.Fragment implements AdapterView.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor>{
+public class HomeFragment extends android.app.Fragment implements AdapterView.OnItemClickListener{
 //    private FragmentActivity listFragment;
     private ProgressDialog progressDialog;
-    private static String url = "http://chinwyejin.com/wp_api/v1/posts?per_page=20&post_type=post";
+    public static final String url_latest = "http://chinwyejin.com/wp_api/v1/posts?per_page=20&post_type=post&orderby=date&order=DESC";
+    public static final String url_oldest = "http://chinwyejin.com/wp_api/v1/posts?per_page=20&post_type=post&orderby=date&order=ASC";
     private final static String TAG_POST = "posts";
-    private final static String TAG_ID = "id";
     private final static String TAG_TYPE = "type";
     private final static String TAG_TITLE = "title";
     private final static String TAG_CONTENT = "content";
-    private static final int LOADER_ID = 1;
-    private LoaderManager.LoaderCallbacks<Cursor> mCallback;
-    private SimpleCursorAdapter mAdapter;
-
+    private final static String TAG_ID = "id";
+    private String url;
     // posts JSON array
     JSONArray posts = null;
     ListView listView;
@@ -56,14 +51,22 @@ public class HomeFragment extends android.app.Fragment implements AdapterView.On
     ArrayList<HashMap<String, String>> postList;
     Context context;
     ElementsListClickHandler handler;
+//    Bundle bundle;
     public HomeFragment(){}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         context = getActivity();
-
         View rootView = inflater.inflate(R.layout.item_lists, container, false);
-        Bundle element = this.getArguments();
+        Bundle bundle = getArguments();
+        if(bundle!=null){
+            url = bundle.getString("url");
+            Log.i("Bundle", bundle.getString("url"));
+        }else{
+            url = url_latest;
+            Log.i("Bundle", "url is null");
+        }
         postList = new ArrayList<HashMap<String, String>>();
 
         // ListView on ItemClickListener
@@ -91,21 +94,6 @@ public class HomeFragment extends android.app.Fragment implements AdapterView.On
     public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
     {
         handler.onHandleElementClick(position);
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 
     private class GetPostTitle extends AsyncTask<Void, Void, Void> {

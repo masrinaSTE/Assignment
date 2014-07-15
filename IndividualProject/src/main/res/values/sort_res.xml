@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_by">
+        <item>Latest Post</item>
+        <item>Oldest Post</item>
+        <item>Alphabetically (Asc)</item>
+        <item>Alphabetically (Desc)</item>
+    </string-array>
+</resources>
